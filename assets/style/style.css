@@ -1,3 +1,51 @@
-body{
-    background: #333;
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    grid-area: header;
+}
+
+.left {
+    grid-area: menu;
+}
+
+.main {
+    grid-area: main;
+}
+
+.right {
+    grid-area: right;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+.grid-container {
+    width: 100%;
+    display: grid;
+    grid-template-areas:
+        'header header header header header header'
+        'menu main main main right right'
+        'footer footer footer footer footer footer';
+    gap: 10px;
+    background-color: #2196F3;
+
+
+}
+
+.grid-container>div {
+
+
+    text-align: center;
+
+
+
+}
+
+.navbar {
+    background: linear-gradient(#333,#666,#777);
 }
