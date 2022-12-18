@@ -2,23 +2,22 @@ body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    height: 100vh;
+    background: linear-gradient(#333, #666, #777);
 }
 
 .header {
     grid-area: header;
+
 }
 
-.left {
-    grid-area: menu;
-}
+
 
 .main {
     grid-area: main;
 }
 
-.right {
-    grid-area: right;
-}
+
 
 .footer {
     grid-area: footer;
@@ -26,26 +25,61 @@ body {
 
 .grid-container {
     width: 100%;
+
     display: grid;
     grid-template-areas:
         'header header header header header header'
-        'menu main main main right right'
+        'main main main main main main'
         'footer footer footer footer footer footer';
-    gap: 10px;
-    background-color: #2196F3;
+
+   
 
 
 }
 
 .grid-container>div {
-
-
     text-align: center;
-
-
 
 }
 
+
+
 .navbar {
-    background: linear-gradient(#333,#666,#777);
+  background: none;
+}
+
+
+
+.btn:focus,
+.btn:active,
+button:focus,
+button:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+#image-gallery .modal-footer {
+    display: block;
+}
+
+.thumb {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.thumbnail {
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 6px 0 rgba(22, 22, 26, 0.18);
+    border-radius: 0;
+    border: 0;
+    margin-bottom: 1.5em;
+}
+
+.thumbnail:hover {
+    transform: scale(1.1);
+}
+#image-gallery-image{
+
+    width: 75%;
+
 }
