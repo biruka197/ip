@@ -1,16 +1,17 @@
-<?php 
+<?php
 
-class PageProvider{
+class PageProvider
+{
     private $con;
     public function __construct($con)
     {
-        $this->con=$con;
-
+        $this->con = $con;
     }
-    public function indexPage($src){
-        $html="<div class='grid-container'>
+    public function indexPage($src, $un, $pro, $log, $link, $link2)
+    {
+        $html = "<div class='grid-container'>
                   <div class='header'>
-                   {$this->navbar()}
+                   {$this->navbar($un,$pro,$log,$link,$link2)}
                   </div>
            
                   <div class='main'>{$this->mainCard($src)}</div>
@@ -21,9 +22,26 @@ class PageProvider{
         ";
         return $html;
     }
-    private function navbar(){
-        $html="";
-        $html="
+    public function form()
+    {
+        $html = "<div class='grid-container'>
+                  <div class='header'>
+             
+                  </div>
+           
+                  <div class='main'>{$this->forms()}</div>
+           
+                  <div class='footer'></div>
+               </div>   
+
+        ";
+        return $html;
+    }
+
+    private function navbar($un, $pro, $log, $link, $link2)
+    {
+        $html = "";
+        $html = "
         <nav class='navbar navbar-inverse'>
         <div class='container-fluid'>
             <div class='navbar-header'>
@@ -37,7 +55,16 @@ class PageProvider{
             <div class='collapse navbar-collapse ' id='myNavbar'>
                 <div class='container'>
                     <ul class='nav navbar-nav  '>
-                        <li class='active'><a href='#'>home</a></li>
+                        <li class=''>
+                         <a class='navbar-brand x' href='#'>
+                 <img  src='./assets/img/uploded/a.jpg' class='rounded-circle' width='50' height='50' alt='logo'>
+ 
+              </a>
+                        </li>
+                        <li>
+                        <a class='navbar-brand x' href='#'>$un</a>
+                        </li>
+                        
 
                     </ul>
                     <ul class='nav navbar-nav navbar-right'>
@@ -52,8 +79,8 @@ class PageProvider{
                             </div>
                         </form>
 
-                        <li><a href='signup.php'><span class='glyphicon glyphicon-user'></span> Sign Up</a></li>
-                        <li><a href='login.php'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>
+                        <li><a href='$link'><span class='glyphicon glyphicon-user'></span> $un</a></li>
+                        <li><a href='$link2'><span class='glyphicon glyphicon-log-in'></span> $log</a></li>
                     </ul>
                 </div>
                 
@@ -65,9 +92,10 @@ class PageProvider{
         ";
         return $html;
     }
-private function mainCard(){
-    $html="";
-    $html="
+    private function mainCard()
+    {
+        $html = "";
+        $html = "
     
     <div class='container'>
     <div class='row'>
@@ -112,6 +140,58 @@ private function mainCard(){
             </div>
         </div>
     ";
-    return $html;
-}
+        return $html;
+    }
+    private function forms(){
+        $html="";
+        $html="
+        <div class='container container_form'>
+        <div class='frame'>
+            <div class='nav nav-form'>
+                <ul class='links'>
+                    <li class='signin-active'><a class='btn'>Log IN</a></li>
+                    <li class='signup-inactive'><a class='btn'>Sign Up</a></li>
+                </ul>
+            </div>
+            <div>
+                <form class='form-signin' action='signin.php' method='post'>
+                    <label for='username'>username</label>
+                    <input class='form-styling' type='text' name='uname' placeholder='' />
+                    <label for='password'>Password</label>
+                    <input class='form-styling' type='text' name='pw' placeholder='' />
+                    <div class='btn-animate'> 
+                      <input type='button' value='signin' class='btn-signin' name='submit'>
+                    </div>
+                </form>
+                <form class='form-signup overflow-auto' action='signup.php' method='POST' enctype='multipart/form-data'>
+                    <label for='firstname'>First name</label>
+                    <input class='form-styling' type='text' name='fname' required />
+                    <label for='lastname'>Last name</label>
+                    <input class='form-styling' type='text' name='lname' required />
+                    <label for='username'>Username</label>
+                    <input class='form-styling' type='text' name='uname' required />
+                    <label for='email'>Email</label>
+                    <input class='form-styling' type='email' name='email' required />
+                    <label for='dob'>Enter Date Of Birth</label>
+                    <input class='form-styling' type='date' name='dob' required />
+                    <select name='sex' class='form-styling' id='sex' required>
+                        <option value=''>choose Sex</option>
+                        <option value='Male'>Male</option>
+                        <option value='female'>female</option>
+                    </select>
+                    <label for='password'>password</label>
+                    <input class='form-styling' type='text' name='pw' required />
+                    <label for='password'>Confirm password</label>
+                    <input class='form-styling' type='password' name='cpw' required />
+                    <input type='file' class='form-styling ' name='img' id=''>
+                    <input type='submit' name='submit' class=' btn-signup' value='Sign UP'>
+                </form>
+
+            </div>
+
+        </div
+        
+        ";
+        return $html;
+    }
 }

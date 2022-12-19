@@ -2,6 +2,8 @@
 require_once("default.php");
 require_once("config.php");
 require_once("class/PageProvider.php");
+require_once("class/formSanitazer.php");
+require_once("class/account.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
