@@ -1,4 +1,8 @@
 <?php
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 class Account
 {
     private $con;
@@ -8,22 +12,27 @@ class Account
     {
         $this->con = $con;
     }
-    public function register($fn, $ln, $un, $em, $dob, $sex, $pw, $pw2,$img,$img_tmp){
+    public function register($fn, $ln, $un, $em, $dob, $sex, $pw, $pw2, $img, $img_tmp)
+    {
         $this->validateName($fn);
         $this->validateName($ln);
         $this->validateusername($un);
         $this->validateEmail($em);
         $this->validateAge($dob);
-        $this->validatePassword($pw,$pw2);
-        $this->validateImageFormat($img,$img_tmp);
+        $this->validatePassword($pw, $pw2);
+        $this->validateImageFormat($img, $img_tmp);
         if (empty($this->errorarr)) {
             return $this->inserIntoUser($fn, $ln, $un, $em, $dob, $sex, $pw, $img);
         } else {
 
-     print_r($this->errorarr);
-            return false;
+            $error = ($this->errorarr);
+            $c = count($error);
+            // echo $c;
+            $qs = http_build_query($error);
+            $url = "http://localhost/kuruimg/form.php?err=error&" . $qs . "&errcount=" . $c;
+            // echo $url;
+            return  $url;
         }
-
     }
     private function inserIntoUser($fn, $ln, $un, $em, $dob, $sex, $pw, $img)
     {
@@ -58,6 +67,50 @@ class Account
         $query->bindParam(":img", $img);
         return $query->execute();
     }
+
+    public function logInUser($un, $pw)
+    {
+
+        $query = $this->con->prepare("SELECT * FROM user WHERE username=:un");
+        $query->bindParam(":un", $un);
+        $query->execute();
+
+        $row = $query->fetch(PDO::FETCH_OBJ);
+        if ($query->rowCount() > 0) {
+            $pass = $row->u_password;
+            $vertify = password_verify($pw, $pass);
+            if ($vertify) {
+                $_SESSION["un"] = $row->username;
+                $_SESSION["uimg"]=$row->u_profile_img;
+                $_SESSION["em"]=$row->u_email;
+                $_SESSION["nm"]=$row->u_fname ." ".$row->u_lname;
+                return true;
+            } else {
+
+                array_push($this->errorarr, "invalid username or password");
+                $error = ($this->errorarr);
+                $c = count($error);
+                // echo $c;
+                $qs = http_build_query($error);
+                $url = "http://localhost/kuruimg/form.php?err=error&" . $qs . "&errcount=" . $c;
+                // echo $url;
+                return  $url;
+
+            }
+        } else {
+            array_push($this->errorarr, "invalid username or password");
+            $error = ($this->errorarr);
+            $c = count($error);
+            // echo $c;
+            $qs = http_build_query($error);
+            $url = "http://localhost/kuruimg/form.php?err=error&" . $qs . "&errcount=" . $c;
+            // echo $url;
+            return  $url;
+        }
+    }
+
+
+
     private function validateName($name)
     {
         if (strlen($name) > 30 || strlen($name) < 3) {

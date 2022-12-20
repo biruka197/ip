@@ -4,6 +4,7 @@ require_once("config.php");
 require_once("class/PageProvider.php");
 require_once("class/formSanitazer.php");
 require_once("class/account.php");
+ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
