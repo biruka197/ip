@@ -19,6 +19,6 @@ $log="logout";
    
 //}
 
-
+//
 require_once('include/footer.php');
 ?>
